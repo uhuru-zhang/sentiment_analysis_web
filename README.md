@@ -1,21 +1,12 @@
-# sentiment_analysis_web
+# 前端框架
+### 本项目使用vue作为基础框架，同时使用了
 
-## Project setup
-```
-npm install
-```
+1. [iview](https://www.iviewui.com/docs/guide/install)
+2. [webpack](https://www.webpackjs.com/)
+3. [vuex](https://vuex.vuejs.org/zh/guide/)
+4. [axios](https://github.com/axios/axios)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### 运行
+`npm isntall`
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
+`npm run dev` 
