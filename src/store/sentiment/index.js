@@ -1,11 +1,12 @@
 import { getField, updateField } from 'vuex-map-fields'
-import { getArticles } from '../../../src/api/sentiment/index'
+import { getArticles, getReviews } from '../../../src/api/sentiment/index'
 
 export default {
   strict: false,
 
   state: {
     split2: 0.6,
+    modal: false,
     formItem: {
       title: null,
       category: null,
@@ -21,10 +22,6 @@ export default {
         {
           title: 'Title',
           key: 'title'
-        },
-        {
-          title: 'document',
-          key: 'document'
         },
         {
           title: 'category',
@@ -49,6 +46,24 @@ export default {
           publication_at: '2016-10-03 00:00:00'
         }
       ]
+    },
+    reviews: {
+      columns: [
+        {
+          title: 'content',
+          key: 'content',
+          width: 500
+        },
+        {
+          title: 'upvote_num',
+          key: 'upvote_num'
+        },
+        {
+          title: 'publication_at',
+          key: 'publication_at'
+        }
+      ],
+      data: []
     }
   },
   getters: {
@@ -69,6 +84,11 @@ export default {
     },
     setLimit (state, n) {
       state.formItem.limit[0] += n
+    },
+    taggleModalMutation (state, reviews) {
+      state.modal = !state.modal
+      console.log(reviews)
+      state.reviews.data = reviews['rows']
     }
   },
   actions: {
@@ -86,6 +106,10 @@ export default {
     },
     resetForm ({ commit }) {
       commit('resetFormMutation')
+    },
+    async taggleModal ({ commit }, seriesId) {
+      let reviews = await getReviews(seriesId)
+      commit('taggleModalMutation', reviews.data)
     }
   }
 }

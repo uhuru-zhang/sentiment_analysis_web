@@ -17,3 +17,11 @@ export const getArticles = (requestData) => {
     }
   )
 }
+
+export const getReviews = (seriesId) => {
+  return axios({
+    method: 'get',
+    url: `reviews/${seriesId}`
+  }
+  )
+}

@@ -70,6 +70,9 @@
 </style>
 <template>
     <div class="layout">
+        <Modal v-model="sentiment.modal" fullscreen title="Reviews">
+            <Table :columns="sentiment.reviews.columns" :data="sentiment.reviews.data"></Table>
+        </Modal>
 
         <Layout>
             <Header>
@@ -202,11 +205,48 @@ export default {
     ...mapActions([
       'getArticles',
       'resetForm',
-      'preArticles'
-    ])
+      'preArticles',
+      'taggleModal'
+    ]),
+    show: function (index) {
+      console.log(this.sentiment.article.articleData[index])
+    }
   },
   mounted () {
     this.getArticles()
+    this.sentiment.article.articleColumns = [
+      {
+        type: 'expand',
+        key: 'expand',
+        width: 50,
+        render: (h, params) => {
+          return h('div',
+            [h('p',
+              [this.sentiment.article.articleData[params.index].document]
+            )]
+          )
+        }
+      },
+      ...this.sentiment.article.articleColumns,
+      {
+        title: 'Show Reviews',
+        key: 'ShowReviews',
+        render: (h, params) => {
+          return h('Button', {
+            props: {
+              type: 'primary'
+            },
+            style: {
+              marginRight: '5px'
+            },
+            on: {
+              click: () => {
+                this.taggleModal(this.sentiment.article.articleData[params.index].series_id)
+              }
+            }
+          }, 'View')
+        }
+      }]
   }
 
 }
